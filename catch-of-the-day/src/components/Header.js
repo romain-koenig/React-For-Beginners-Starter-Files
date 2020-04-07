@@ -2,12 +2,12 @@ import React from "react"
 
 const Header = (props) => (
     <header className="top">
-        <h1>Catch
+        <h1>La
              <span className="ofThe">
-             <span className="of">of</span>
-             <span className="the">the</span>
+             <span className="of">du</span>
+             <span className="the">jour</span>
             </span>
-                 Day</h1>
+                 Prise</h1>
         <h3 className="tagline"><span>{props.tagline}</span></h3>
     </header>
 );
