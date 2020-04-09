@@ -12,11 +12,26 @@ class AddFishForm extends React.Component {
         // 1. Stop the form from submitting
         event.preventDefault();
         // 2. Create a Fish in the state
-        console.log("Making a fish 🐟");
-        console.log(this.nameRef.current.value);
+        console.log("Making a fish 🐟 in addFishForm");
+
+
+        const price = isNaN(parseFloat(this.priceRef.current.value)) ? 0 : Math.abs(parseFloat(this.priceRef.current.value))
+
+        const fish = {
+            name: this.nameRef.current.value,
+            price: price,
+            status: this.statusRef.current.value,
+            desc: this.descRef.current.value,
+            image: this.imageRef.current.value,
+        }
+
+        this.props.addFish(fish);
+
+        //Refresh the form
+
+        event.currentTarget.reset();
 
     }
-
 
     render() {
         return (
