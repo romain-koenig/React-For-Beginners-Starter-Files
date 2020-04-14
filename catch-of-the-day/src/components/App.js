@@ -19,7 +19,13 @@ class App extends React.Component {
 
     componentDidMount() {
 
-        const {params} = { ...this.props.match };
+        const { params } = { ...this.props.match };
+
+        const localStorageRef = localStorage.getItem(params.storeId);
+        if (localStorageRef) {
+            this.setState({ order: JSON.parse(localStorageRef) });
+        }
+
         this.ref = base.syncState(`${params.storeId}/fishes`, {
             context: this,
             state: 'fishes',
@@ -27,8 +33,17 @@ class App extends React.Component {
 
     };
 
+    componentDidUpdate() {
+        localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
+    };
+
+    componentWillUnmount() {
+        base.removeBinding(this.ref);
+    };
+
+
+
     addFish = (fish) => {
-        console.log(`Adding a fish from App component`);
         //1. Take a copy of existing state - never modify a state directly
         const fishes = { ...this.state.fishes };
         //2. Add our new fish to fishes variable
@@ -36,19 +51,24 @@ class App extends React.Component {
         //3. Set the new fishes object to state
         this.setState({ fishes }); // in ES6 it's the same as this.setState({ fishes: fishes }); because the object and the state have the same name
 
-        console.log(this.state.fishes);
-
-
     };
 
+    editFish = (key, updatedFish) => {
+        console.log("App : Edit fish")
+        //1. Take a copy of existing state - never modify a state directly
+        const fishes = { ...this.state.fishes };
+        //2. Modify ou fish to fishes variable
+        fishes[key] = updatedFish;
+        //3. Set the new fishes object to state
+        this.setState({ fishes }); // in ES6 it's the same as this.setState({ fishes: fishes }); because the object and the state have the same name
+
+    }
+
     loadSampleFishes = () => {
-        console.log('Loading Fishes 🐟🐠🐡🦈');
         this.setState({ fishes: sampleFishes });
     };
 
     addToOrder = (key) => {
-
-        console.log(`In App.addToOrder - Key = ${key}`)
 
         //1. take a copy of existing state
         const order = { ...this.state.order };
@@ -84,7 +104,9 @@ class App extends React.Component {
                     order={this.state.order} />
                 <Inventory
                     addFish={this.addFish}
-                    loadSampleFishes={this.loadSampleFishes} />
+                    loadSampleFishes={this.loadSampleFishes}
+                    fishes={this.state.fishes}
+                    editFish={this.editFish} />
             </div>
         )
 

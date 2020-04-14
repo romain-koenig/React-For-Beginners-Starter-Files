@@ -7,6 +7,13 @@ class Order extends React.Component {
 
         const fish = this.props.fishes[key];
         const count = this.props.order[key];
+        // We have to test if fish exists : order is stored in local storage ; fishes in firebase
+        // therefore, order is retrieved faster ; we loop on order and try to get fish data before fishes exists
+        // to prevent a bug > we test if it exists first.
+        if (! fish) {
+            return null;
+        }
+
         const isAvailable = fish.status === "available";
         if (!isAvailable) {
             return (
@@ -26,7 +33,12 @@ class Order extends React.Component {
             const fish = this.props.fishes[key];
             const isAvailable = fish && fish.status === "available";
             const quantity = isAvailable ? this.props.order[key] : 0;
-            return prevTotal + quantity * fish.price;
+            
+        // We have to test if fish exists : order is stored in local storage ; fishes in firebase
+        // therefore, order is retrieved faster ; we loop on order and try to get fish data before fishes exists
+        // to prevent a bug > we test if it exists first.
+        return fish ? prevTotal + quantity * fish.price : 0;
+        
         }, 0)
 
         return (
