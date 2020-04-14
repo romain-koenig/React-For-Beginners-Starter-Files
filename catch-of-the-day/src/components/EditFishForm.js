@@ -3,7 +3,7 @@ import React from 'react';
 class EditFishForm extends React.Component {
 
     handleChange = event => {
-        console.log(event.currentTarget.value);
+
         //1. Take a copy of the updated fish
 
         //[event.currentTarget.name] : new in ES6 - dynamically retrieve the name of the updates value
@@ -13,13 +13,9 @@ class EditFishForm extends React.Component {
             [event.currentTarget.name]: event.currentTarget.value,
         };
 
-        console.log(updatedFish);
-
-        
         this.props.editFish(this.props.index, updatedFish);
-
-
     };
+
 
     render() {
         const fish = this.props.fish;
@@ -67,6 +63,8 @@ class EditFishForm extends React.Component {
                     onChange={this.handleChange}
                     value={image} />
 
+                <button id={this.props.index} onClick={() => { this.props.deleteFish(this.props.index); }}>
+                    Effacer</button>
 
             </div>
 

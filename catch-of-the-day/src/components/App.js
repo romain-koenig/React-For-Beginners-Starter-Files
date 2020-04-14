@@ -80,6 +80,15 @@ class App extends React.Component {
 
     }
 
+    deleteFish = (key) => {
+        //1. Take a copy of existing state - never modify a state directly
+        const fishes = { ...this.state.fishes };
+        //2. Firebase = needs to set the value to delete to null
+        fishes[key] = null;
+        //3. Set the modified fishes object to state
+        this.setState({ fishes });
+    }
+
     render() {
 
         return (
@@ -106,7 +115,8 @@ class App extends React.Component {
                     addFish={this.addFish}
                     loadSampleFishes={this.loadSampleFishes}
                     fishes={this.state.fishes}
-                    editFish={this.editFish} />
+                    editFish={this.editFish}
+                    deleteFish={this.deleteFish} />
             </div>
         )
 
