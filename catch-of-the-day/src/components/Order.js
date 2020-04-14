@@ -10,19 +10,26 @@ class Order extends React.Component {
         // We have to test if fish exists : order is stored in local storage ; fishes in firebase
         // therefore, order is retrieved faster ; we loop on order and try to get fish data before fishes exists
         // to prevent a bug > we test if it exists first.
-        if (! fish) {
+        if (!fish) {
             return null;
         }
 
         const isAvailable = fish.status === "available";
         if (!isAvailable) {
             return (
-            <li key ={key}>Désolé, {fish ? fish.name : "Ce poisson"} n'est plus disponible</li>
+                <li key={key}>Désolé, {fish ? fish.name : "Ce poisson"} n'est plus disponible
+
+                    <button onClick={() => { this.props.removeFromOrder(key) }}>&times;
+            </button>
+                </li>
             );
         }
 
         return (
-        <li key ={key}>{count} x {fish.name} {formatPrice(count * fish.price)} </ li>
+            <li key={key}>{count} x {fish.name} {formatPrice(count * fish.price)}
+                    <button onClick={() => { this.props.removeFromOrder(key) }}>&times;
+            </button>
+            </ li>
         );
     }
 
@@ -33,19 +40,19 @@ class Order extends React.Component {
             const fish = this.props.fishes[key];
             const isAvailable = fish && fish.status === "available";
             const quantity = isAvailable ? this.props.order[key] : 0;
-            
-        // We have to test if fish exists : order is stored in local storage ; fishes in firebase
-        // therefore, order is retrieved faster ; we loop on order and try to get fish data before fishes exists
-        // to prevent a bug > we test if it exists first.
-        return fish ? prevTotal + quantity * fish.price : 0;
-        
+
+            // We have to test if fish exists : order is stored in local storage ; fishes in firebase
+            // therefore, order is retrieved faster ; we loop on order and try to get fish data before fishes exists
+            // to prevent a bug > we test if it exists first.
+            return fish ? prevTotal + quantity * fish.price : 0;
+
         }, 0)
 
         return (
             <div className="order-wrap">
                 <h2>Commande</h2>
 
-                <ul>
+                <ul className="order">
                     {orderIds.map(this.renderOrder)}
 
                 </ul>
