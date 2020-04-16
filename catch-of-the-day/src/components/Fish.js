@@ -1,8 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { formatPrice } from '../helpers';
 
 class Fish extends React.Component {
 
+    static propTypes = {
+        addToOrder: PropTypes.func.isRequired,
+        fish: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            status: PropTypes.string,
+            desc: PropTypes.string,
+            image: PropTypes.string,
+        }).isRequired,
+
+    }
 
     render() {
 
@@ -21,13 +34,16 @@ class Fish extends React.Component {
                 <button
                     type="submit"
                     disabled={!isAvailable}
-                    onClick={() => this.props.addToOrder(this.props.myKey)}>
-                {btnText}
-                        </button>
+                    onClick={() => this.props.addToOrder(this.props.index)}>
+                    {btnText}
+                </button>
 
             </li >
         );
     }
 }
+
+
+
 
 export default Fish;

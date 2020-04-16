@@ -1,6 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class EditFishForm extends React.Component {
+
+
+    static propTypes = {
+        index: PropTypes.string.isRequired,
+        fish: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            status: PropTypes.string,
+            desc: PropTypes.string,
+            image: PropTypes.string,
+        }).isRequired,
+        editFish: PropTypes.func.isRequired,
+        deleteFish: PropTypes.func.isRequired,
+    }
 
     handleChange = event => {
 
@@ -37,11 +52,13 @@ class EditFishForm extends React.Component {
                     onChange={this.handleChange}
                     value={name} />
                 <input
-                    type="text"
+                    type="number"
                     name="price"
                     placeholder="Prix"
                     onChange={this.handleChange}
-                    value={price} />
+                    value={price}
+                    min="10"
+                    max="10000" />
                 <select
                     type="text"
                     name="status"

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import Header from "./Header";
 import Inventory from "./Inventory";
@@ -11,6 +12,10 @@ import base from '../base';
 
 
 class App extends React.Component {
+
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+    }
 
     state = {
         fishes: {},
@@ -176,7 +181,7 @@ class App extends React.Component {
                                 <Fish
                                     key={key}
                                     // Key is only for React, connot use it
-                                    myKey={key}
+                                    index={key}
                                     fish={this.state.fishes[key]}
                                     addToOrder={this.addToOrder} />)
                         }
